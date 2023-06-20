@@ -7,7 +7,7 @@ WIDTH, HEIGHT = 1600, 900
 enn_lst = {pg.K_UP: (0, -5), pg.K_DOWN: (0, +5), pg.K_LEFT: (-5, 0), pg.K_RIGHT: (+5, 0)}
 
 
-def check_bound(rect: pg.Rect) -> tuple[bool, bool]:
+def check_bound(rect: pg.Rect) -> tuple[bool, bool]:  #こうかとんに着弾したか判定
     yoko, tate = True, True
     if rect.left < 0 or WIDTH < rect.right:
         yoko = False
@@ -56,12 +56,12 @@ def main():
             if event.type == pg.QUIT: 
                 return
             
-        if kk_rct.colliderect(enn_rct):
+        if kk_rct.colliderect(enn_rct):  #ゲームオーバーの設定
             screen.blit(kk_img_lst[9], kk_rct)
             print("ゲームオーバー")
             return
         
-        key_lst = pg.key.get_pressed()
+        key_lst = pg.key.get_pressed()  #キーに対応したこうかとんの動き
         sum_mv = [0,0]
         for k, mv in enn_lst.items():
             if key_lst[k]:
@@ -71,15 +71,15 @@ def main():
         if check_bound(kk_rct) != (True, True):
             kk_rct.move_ip(-sum_mv[0], -sum_mv[1])
 
-        for i in range(8):
+        for i in range(8):  #向きごとのこうかとんの表示
             if kk_mv_xy[i] == sum_mv:
                 kk_img = kk_img_lst[i]
 
         screen.blit(bg_img, [0, 0])
         screen.blit(kk_img, kk_rct)
-        avx, avy = vx*accs[min(tmr//500, 9)], vy*accs[min(tmr//500, 9)]
+        avx, avy = vx*accs[min(tmr//500, 9)], vy*accs[min(tmr//500, 9)]  #爆弾の加速
         enn_rct.move_ip(avx, avy)
-        yoko, tate = check_bound(enn_rct)
+        yoko, tate = check_bound(enn_rct)  #画面のはみ出し対策
         if not yoko:
             vx *= -1
         if not tate:
