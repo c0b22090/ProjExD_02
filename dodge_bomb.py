@@ -45,6 +45,7 @@ def main():
     vx, vy = +5, +5
     kk_img_lst = [kk_img_1, kk_img_2, kk_img_3, kk_img_4, kk_img_5, kk_img_6, kk_img_7, kk_img_8]
     kk_mv_xy = [[-5, -5], [-5, 0], [-5, +5], [0, +5], [+5, +5], [+5, 0], [+5, -5], [0, -5]]
+    accs = [a for a in range(1, 11)]
 
 
     while True:
@@ -72,7 +73,8 @@ def main():
 
         screen.blit(bg_img, [0, 0])
         screen.blit(kk_img, kk_rct)
-        enn_rct.move_ip(vx, vy)
+        avx, avy = vx*accs[min(tmr//500, 9)], vy*accs[min(tmr//500, 9)]
+        enn_rct.move_ip(avx, avy)
         yoko, tate = check_bound(enn_rct)
         if not yoko:
             vx *= -1
