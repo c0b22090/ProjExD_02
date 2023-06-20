@@ -21,6 +21,8 @@ def main():
     screen = pg.display.set_mode((WIDTH, HEIGHT))
     bg_img = pg.image.load("ex02/fig/pg_bg.jpg")
     kk_img = pg.image.load("ex02/fig/3.png")
+    kk_img_go = pg.image.load("ex02/fig/8.png")
+    kk_img_go = pg.transform.rotozoom(kk_img_go, 0, 2.0)
     kk_img_f = pg.transform.flip(kk_img, True, False)
     enn = pg.Surface((20,20))
     pg.draw.circle(enn, (255, 0, 0), (10, 10), 10)
@@ -38,12 +40,13 @@ def main():
     kk_rct.center = 900, 400
     clock = pg.time.Clock()
     tmr = 0
+    tmr_go = 0
     x = random.randint(0, WIDTH)
     y = random.randint(0, HEIGHT)
     enn_rct = enn.get_rect()
     enn_rct.center = x, y
     vx, vy = +5, +5
-    kk_img_lst = [kk_img_1, kk_img_2, kk_img_3, kk_img_4, kk_img_5, kk_img_6, kk_img_7, kk_img_8]
+    kk_img_lst = [kk_img_1, kk_img_2, kk_img_3, kk_img_4, kk_img_5, kk_img_6, kk_img_7, kk_img_8, kk_img_go]
     kk_mv_xy = [[-5, -5], [-5, 0], [-5, +5], [0, +5], [+5, +5], [+5, 0], [+5, -5], [0, -5]]
     accs = [a for a in range(1, 11)]
 
@@ -54,6 +57,7 @@ def main():
                 return
             
         if kk_rct.colliderect(enn_rct):
+            screen.blit(kk_img_lst[9], kk_rct)
             print("ゲームオーバー")
             return
         
@@ -67,7 +71,7 @@ def main():
         if check_bound(kk_rct) != (True, True):
             kk_rct.move_ip(-sum_mv[0], -sum_mv[1])
 
-        for i in range(len(kk_img_lst)):
+        for i in range(8):
             if kk_mv_xy[i] == sum_mv:
                 kk_img = kk_img_lst[i]
 
